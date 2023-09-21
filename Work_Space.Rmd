@@ -1,14 +1,21 @@
 ---
 title: "My first R markdown"
-date: "12-10-2023"
 author: "Your name"
+date: "12-10-2023"
 output:
-  html_notebook: default
+  html_document:
+    df_print: paged
   pdf_document: default
+  html_notebook: default
 ---
 
 Hello all,
 
 This is my first report generated using R markdown. I your Rstudio if the version are correct and packages such 
 
+```{r first code, echo=TRUE}
+name <- "your name"
+paste("Hello world!","My name is",name,sep = "")
+```
 
+As you can see, the above code chuck 
