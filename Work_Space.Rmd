@@ -1,0 +1,14 @@
+---
+title: "My first R markdown"
+date: "12-10-2023"
+author: "Your name"
+output:
+  html_notebook: default
+  pdf_document: default
+---
+
+Hello all,
+
+This is my first report generated using R markdown. I your Rstudio if the version are correct and packages such 
+
+
