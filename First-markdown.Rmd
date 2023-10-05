@@ -3,10 +3,10 @@ title: "My first notebook"
 author: "Chandan Kumar Pandey"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
-  word_document: default
   html_document:
     df_print: paged
+  word_document: default
+  pdf_document: default
 ---
 
 # Activity uno
@@ -22,22 +22,23 @@ You can write your introduction here
 #### Method (Hypothetical)
 
 We conducted a survey in schools of Bangalore North Taluk to understand the impact of the number of hours of study on student final scores. Student's parents were interviewed during parent-teacher meetings (PTA) to collect data on number of hours the child. Further from the school records, we collected overall final grades. 
-To assess the impact of study time on the overall grades, we fitted a linear regression model with the number of hours as the independent variable.
+To assess the impact of study time and course taken on the overall grades, we fitted a linear regression model with the number of hours as the independent variable and number of courses enrolled in and marks are response variable;($marks=\beta_1*Number of course +\beta_2 * Hours study + \epsilon$), where $\epsilon~N(0,1)$ .
 All analyses were performed in R statistical software (@boud1989quantitative) `r R.Version()$version.string`.
 
 #### Results
 
-```{r data load and prim ana, include=T,echo=F,warning=FALSE}
+```{r data load and prim ana, include=F,echo=F,warning=FALSE}
 library(dplyr,warn.conflicts = F)
 ##loading the dataset into the R
 student_marks<-read.csv("./Resource material/Data/Student_Marks.csv",header = T)
+student_marks$Marks <- log(student_marks$Marks)
 range_study <- range(student_marks$time_study)%>%round(2)
 range_marks <- range(student_marks$Marks)%>%round(2)
 ```
 
-A total of `r nrow(student_marks)` student records were collected, with the number of courses students were enrolled in ranging between `r min(student_marks$number_courses)` and `r max(student_marks$number_courses)`. Based on parents' interviews, on average, students studied for `r round(mean(student_marks$time_study),2)` hours per day (ranging from `r range_study[1]` to `r range_study[2]` per day). Further, the average mark scored was `r round(mean(student_marks$Marks),2)` out of 60, ranging from `r range_marks[1]` to `r range_marks[2]`.
+A total of `r nrow(student_marks)` student records were collected, with the number of courses students were enrolled in ranging between `r min(student_marks$number_courses)` and `r max(student_marks$number_courses)`. Based on parents' interviews, on average, students studied for `r round(mean(student_marks$time_study),2)` hours per day (ranging from `r range_study[1]` to `r range_study[2]` per day). Further, the average mark scored was `r round(mean(student_marks$Marks),2)` in log scale, ranging from `r range_marks[1]` to `r range_marks[2]`.
 
-```{r linear model, include=F,echo=F,warning=F}
+```{r linear model, include=T,echo=T,warning=F}
 model <- lm(Marks~number_courses+time_study,data = student_marks)
 anova_table <- anova(model)%>%as.data.frame()%>%round(3)
 model_summary <- summary(model)
@@ -94,7 +95,7 @@ plot+geom_point()+
   theme_bw()+
   labs(
         x="Study hours per day",
-    y="Marks scored"
+    y="Marks scored (log)"
   )
 ```
 
