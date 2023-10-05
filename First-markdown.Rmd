@@ -5,6 +5,13 @@ date: "`r Sys.Date()`"
 output: pdf_document
 ---
 
+# Activity Uno
+
+## Advantage of R Markdown
+
+### Case 1: 
+
+Imaging you have completed the analysis with linear modelling and want to submit you result to
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
