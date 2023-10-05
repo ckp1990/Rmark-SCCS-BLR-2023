@@ -36,7 +36,7 @@ range_study <- range(student_marks$time_study)%>%round(2)
 range_marks <- range(student_marks$Marks)%>%round(2)
 ```
 
-A total of `r nrow(student_marks)` student records were collected, with the number of courses students were enrolled in ranging between `r min(student_marks$number_courses)` and `r max(student_marks$number_courses)`. Based on parents' interviews, on average, students studied for `r round(mean(student_marks$time_study),2)` hours per day (ranging from `r range_study[1]` to `r range_study[2]` per day). Further, the average mark scored was `r round(mean(student_marks$Marks),2)` in log scale, ranging from `r range_marks[1]` to `r range_marks[2]`.
+A total of `r nrow(student_marks)` student records were collected, with the number of courses students were enrolled in ranging between `r min(student_marks$number_courses)` and `r max(student_marks$number_courses)`. Based on parents' interviews, on average, students studied for `r round(mean(student_marks$time_study),2)` hours per day (ranging from `r range_study[1]` to `r range_study[2]` per day). Further, the average mark scored was `r round(mean(student_marks$Marks),2)` in log scale, ranging from `r range_marks[1]` to `r range_marks[2]`..
 
 ```{r linear model, include=T,echo=T,warning=F}
 model <- lm(Marks~number_courses+time_study,data = student_marks)
