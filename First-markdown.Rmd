@@ -2,9 +2,107 @@
 title: "My first notebook"
 author: "Chandan Kumar Pandey"
 date: "`r Sys.Date()`"
-output: pdf_document
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
 ---
 
-This is my first markdown documents, 
+# Activity uno
 
-# This is the example of header 1
+## Advantage of R Markdown
+
+### Question 1:- Does the number of hours students study impact their grades? 
+
+#### Introduction 
+
+You can write your introduction here
+
+#### Method (Hypothetical)
+
+We conducted a survey in schools of Bangalore North Taluk to understand the impact of the number of hours of study on student final scores. Student's parents were interviewed during parent-teacher meetings (PTA) to collect data on number of hours the child. Further from the school records, we collected overall final grades. 
+To assess the impact of study time on the overall grades, we fitted a linear regression model with the number of hours as the independent variable.
+All analyses were performed in R statistical software (@boud1989quantitative) `r R.Version()$version.string`.
+
+#### Results
+
+```{r data load and prim ana, include=T,echo=F,warning=FALSE}
+library(dplyr,warn.conflicts = F)
+##loading the dataset into the R
+student_marks<-read.csv("./Resource material/Data/Student_Marks.csv",header = T)
+range_study <- range(student_marks$time_study)%>%round(2)
+range_marks <- range(student_marks$Marks)%>%round(2)
+```
+
+A total of `r nrow(student_marks)` student records were collected, with the number of courses students were enrolled in ranging between `r min(student_marks$number_courses)` and `r max(student_marks$number_courses)`. Based on parents' interviews, on average, students studied for `r round(mean(student_marks$time_study),2)` hours per day (ranging from `r range_study[1]` to `r range_study[2]` per day). Further, the average mark scored was `r round(mean(student_marks$Marks),2)` out of 60, ranging from `r range_marks[1]` to `r range_marks[2]`.
+
+```{r linear model, include=F,echo=F,warning=F}
+model <- lm(Marks~number_courses+time_study,data = student_marks)
+anova_table <- anova(model)%>%as.data.frame()%>%round(3)
+model_summary <- summary(model)
+summary_table <- model_summary$coefficients%>%as.data.frame()%>%round(3)
+rownames(summary_table) <- c("Intercept","Courses enrolled-in","Per day hours of study")
+```
+
+In our model, the number of courses(`r anova_table[1,1]`,`r anova_table[1,4]`,___p<0.005___ ) and study times (`r anova_table[2,1]`,`r anova_table[2,4]`,___p<0.005___ )were significant in explaining the student's grades in the final examination (__Table 1__). Overall, our model was able to explain `r round(summary(model)$adj.r.squared*100,2)`% of the variation in the marks of students. With the increase in each course, the student average grades improved by `r paste(summary_table[1,1],"(", summary_table[1,2],")",sep = "")`. Similarly, each extra hour of study will increase the score by a factor of `r paste(summary_table[2,1],"(", summary_table[2,2],")",sep = "")` (Table 2, Fig1) 
+
+```{r tables1 in latex,include=TRUE,echo=F,eval=knitr::is_latex_output(),warning=FALSE}
+library(knitr)
+library(kableExtra)
+## preparing the tables
+## Table 1 anova table
+
+kbl(anova_table, booktabs = T,caption = "Table1: Annova output of the model") %>%
+kable_styling(latex_options = c("striped", "scale_down"))
+```
+
+```{r tables1 in html,include=TRUE,echo=F,eval=!knitr::is_latex_output(),warning=FALSE}
+library(knitr)
+## preparing the tables
+## Table 1 anova table
+anova_table <- anova(model)%>%as.data.frame()%>%round(3)
+kable(anova_table,caption = "Table1: Annova output of the model")
+## one can style this table using another package called flextable
+```
+
+```{r addition table 2 latex,include=TRUE,echo=F,eval=knitr::is_latex_output(),warning=F}
+library(knitr)
+library(kableExtra)
+## preparing the tables
+## Table 1 anova table
+kbl(summary_table, booktabs = T,caption = "Table2: model summary") %>%
+kable_styling(latex_options = c("striped", "scale_down"))
+```
+
+```{r tables1 in table 2 word,include=T,echo=F,eval=!knitr::is_latex_output(),warning=FALSE}
+library(knitr)
+## preparing the tables
+## Table 1 anova table
+kable(summary_table,caption = "Table2: model summary")
+## one can style this table using another package called flextable
+```
+
+```{r graphs, include=T,echo=F,warning=F,fig.cap="Student performace in relation to number of hours study and courses enrolled in",fig.height=4,fig.width=6}
+library(ggplot2,warn.conflicts = F)
+predicted_value<-predict.lm(model,interval = "confidence")%>%as.data.frame()
+student_marks<-cbind(student_marks,predicted_value)
+plot <- ggplot(data = student_marks, aes(x=time_study,y=Marks,col=as.factor(number_courses)))
+plot+geom_point()+
+  geom_line(aes(y=fit))+
+  geom_ribbon(aes(ymin=lwr,ymax=upr),alpha=0.05)+
+  theme_bw()+
+  labs(
+        x="Study hours per day",
+    y="Marks scored"
+  )
+```
+
+
+#### Discussion
+
+1. Our study align with words of elder that with more study we can get good grades
+2. It was surprising that several courses also increased the overall mark. This may be due      to the following reasons
+   * Generally, people who study more take more courses.
+   * The average of many subjects compensates for few bad results. 
+   
