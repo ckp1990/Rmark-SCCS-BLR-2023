@@ -1,0 +1,65 @@
+---
+title: "First program"
+author: "Your name"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  word_document: default
+---
+
+You can inrest the text just like typing here
+
+However, if you want to add the heading in the document we need to at with
+
+# Heading (Make sure you add space after \#)
+
+## Smaller header can also be added
+
+You can do till header 6
+
+If you want to add the italics we need to words between (*word*) and for bold font we need (**word**).
+
+We can also use (*word*) for italics and (**word**) for bold.
+
+**NoTICE, FOR ADDING SPACE BETWEEN YOU LINE YOU NEED TO HIT ENTER KEY TWO TIME**
+
+Now if you was to add subscript such as 3^rd^ Oct, 2023
+
+For Subscript we need (H~2~O) but for strikethrough we need two ~~Hello~~.
+
+For the equation if you write equation $x=mx+C$ and for equation in new line $$X^2 + Y^2 = r^2$$
+
+Now if you want to add link, download [R studio](www.rstudio.com)
+
+of let add images ![Rstudio](./images.png)
+
+Now let we need to add the list of items.
+
+1.  List one
+
+    -   Sublist (not order)
+
+    a.  List with name
+
+2.  Number 2
+
+Imaging you want to add table
+
+| First Header | Second Header |
+|--------------|---------------|
+| Content Cell | Content Cell  |
+| Content Cell | Content Cell  |
+
+There is better way to do this.
+
+Let start adding the R codes now
+
+```{r name of chuck, include=T, echo=TRUE,warning=T}
+name = "Chandan Pandey"
+x <- paste("My names is",name,sep=" ")
+print(x)
+```
+
+## using Inline command
+
+My name is `r name`.
