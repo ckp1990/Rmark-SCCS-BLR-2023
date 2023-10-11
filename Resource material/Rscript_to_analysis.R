@@ -1,6 +1,8 @@
 library(dplyr,warn.conflicts = F)
-##loading the dataset into the R
-student_marks<-read.csv("./Resource material/Data/Student_Marks.csv",header = T)
+##loading the data set into the R
+## Enter the Student marks
+
+student_marks<-read.csv("./Resource material/Data/Student_Marks.csv",header = T) 
 range_study <- range(student_marks$time_study)%>%round(2)
 range_marks <- range(student_marks$Marks)%>%round(2)
 
