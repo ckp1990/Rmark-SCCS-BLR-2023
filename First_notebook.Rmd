@@ -6,6 +6,7 @@ output:
   pdf_document: default
   word_document: default
   html_document: default
+
 ---
 
 You can inrest the text just like typing here
@@ -64,3 +65,5 @@ print(x)
 ## using Inline command
 
 My name is `r name`.
+
+

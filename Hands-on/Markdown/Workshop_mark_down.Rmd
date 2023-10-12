@@ -3,27 +3,27 @@ title: "My first notebook"
 author: "Chandan Kumar Pandey"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
   word_document: default
-  pdf_document: default
+bibliography: ref.bib
+csl: museum-national-dhistoire-naturelle.csl  
 ---
 
 # Activity uno
 
 ## Advantage of R Markdown
 
-### Question 1:- Does the number of hours students study impact their grades? 
+### Question 1:- Does the number of hours students study impact their grades?
 
-#### Introduction 
+#### Introduction
 
 You can write your introduction here
 
 #### Method (Hypothetical)
 
-We conducted a survey in schools of Bangalore North Taluk to understand the impact of the number of hours of study on student final scores. Student's parents were interviewed during parent-teacher meetings (PTA) to collect data on number of hours the child. Further from the school records, we collected overall final grades. 
-To assess the impact of study time and course taken on the overall grades, we fitted a linear regression model with the number of hours as the independent variable and number of courses enrolled in and marks are response variable;($marks=\beta_1*Number of course +\beta_2 * Hours study + \epsilon$), where $\epsilon~N(0,1)$ .
-All analyses were performed in R statistical software (@boud1989quantitative) `r R.Version()$version.string`.
+We conducted a survey in schools of Bangalore North Taluk to understand the impact of the number of hours of study on student final scores. Student's parents were interviewed during parent-teacher meetings (PTA) to collect data on number of hours the child. Further from the school records, we collected overall final grades. To assess the impact of study time and course taken on the overall grades, we fitted a linear regression model with the number of hours as the independent variable and number of courses enrolled in and marks are response variable;($marks=\beta_1*Number of course +\beta_2 * Hours study + \epsilon$), where $\epsilon~N(0,1)$ . All analyses were performed in R statistical software `r R.Version()$version.string` (@R-base).
 
 #### Results
 
@@ -31,7 +31,7 @@ All analyses were performed in R statistical software (@boud1989quantitative) `r
 library(dplyr,warn.conflicts = F)
 ##loading the dataset into the R
 student_marks<-read.csv("./Data/Student_Marks.csv",header = T)
-student_marks$Marks <- log(student_marks$Marks)
+#student_marks$Marks <- log(student_marks$Marks)
 range_study <- range(student_marks$time_study)%>%round(2)
 range_marks <- range(student_marks$Marks)%>%round(2)
 ```
@@ -46,7 +46,7 @@ summary_table <- model_summary$coefficients%>%as.data.frame()%>%round(3)
 rownames(summary_table) <- c("Intercept","Courses enrolled-in","Per day hours of study")
 ```
 
-In our model, the number of courses(`r anova_table[1,1]`,`r anova_table[1,4]`,___p<0.005___ ) and study times (`r anova_table[2,1]`,`r anova_table[2,4]`,___p<0.005___ )were significant in explaining the student's grades in the final examination (__Table 1__). Overall, our model was able to explain `r round(summary(model)$adj.r.squared*100,2)`% of the variation in the marks of students. With the increase in each course, the student average grades improved by `r paste(summary_table[1,1],"(", summary_table[1,2],")",sep = "")`. Similarly, each extra hour of study will increase the score by a factor of `r paste(summary_table[2,1],"(", summary_table[2,2],")",sep = "")` (Table 2, Fig1) 
+In our model, the number of courses(`r anova_table[1,1]`,`r anova_table[1,4]`,***p\<0.005*** ) and study times (`r anova_table[2,1]`,`r anova_table[2,4]`,***p\<0.005*** )were significant in explaining the student's grades in the final examination (**Table 1**). Overall, our model was able to explain `r round(summary(model)$adj.r.squared*100,2)`% of the variation in the marks of students. With the increase in each course, the student average grades improved by `r paste(summary_table[1,1],"(", summary_table[1,2],")",sep = "")`. Similarly, each extra hour of study will increase the score by a factor of `r paste(summary_table[2,1],"(", summary_table[2,2],")",sep = "")` (Table 2, Fig1)
 
 ```{r tables1 in latex,include=TRUE,echo=F,eval=knitr::is_latex_output(),warning=FALSE}
 library(knitr)
@@ -95,15 +95,15 @@ plot+geom_point()+
   theme_bw()+
   labs(
         x="Study hours per day",
-    y="Marks scored (log)"
+    y="Marks scored"
   )
 ```
 
-
 #### Discussion
 
-1. Our study align with words of elder that with more study we can get good grades
-2. It was surprising that several courses also increased the overall mark. This may be due      to the following reasons
-   * Generally, people who study more take more courses.
-   * The average of many subjects compensates for few bad results. 
-   
+1.  Our study align with results of @yu2011much and @borg1989case that with more study we can get good grades
+2.  It was surprising that several courses also increased the overall mark. This may be due to the following reasons
+    -   Generally, people who study more take more courses.
+    -   The average of many subjects compensates for few bad results.
+
+References:
