@@ -4,3 +4,5 @@ tinytex::reinstall_tinytex(repository = "illinois")
 
 
 https://bookdown.org/yihui/rmarkdown-cookbook/what-to-change.html
+
+https://www.zotero.org/styles?fields=anthropology

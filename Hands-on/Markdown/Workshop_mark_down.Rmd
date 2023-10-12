@@ -4,9 +4,9 @@ author: "Chandan Kumar Pandey"
 date: "`r Sys.Date()`"
 output:
   pdf_document: default
+  word_document: default
   html_document:
     df_print: paged
-  word_document: default
 bibliography: ref.bib
 csl: museum-national-dhistoire-naturelle.csl  
 ---
@@ -50,12 +50,12 @@ In our model, the number of courses(`r anova_table[1,1]`,`r anova_table[1,4]`,**
 
 ```{r tables1 in latex,include=TRUE,echo=F,eval=knitr::is_latex_output(),warning=FALSE}
 library(knitr)
-library(kableExtra)
+#library(kableExtra)
+library(dplyr)
 ## preparing the tables
 ## Table 1 anova table
-
-kbl(anova_table, booktabs = T,caption = "Table1: Annova output of the model") %>%
-kable_styling(latex_options = c("striped", "scale_down"))
+anova_table <- anova(model)%>%as.data.frame()%>%round(3)
+kable(anova_table,caption = "Table1 in latex: Annova output of the model")
 ```
 
 ```{r tables1 in html,include=TRUE,echo=F,eval=!knitr::is_latex_output(),warning=FALSE}
@@ -69,11 +69,10 @@ kable(anova_table,caption = "Table1: Annova output of the model")
 
 ```{r addition table 2 latex,include=TRUE,echo=F,eval=knitr::is_latex_output(),warning=F}
 library(knitr)
-library(kableExtra)
+#library(kableExtra)
 ## preparing the tables
 ## Table 1 anova table
-kbl(summary_table, booktabs = T,caption = "Table2: model summary") %>%
-kable_styling(latex_options = c("striped", "scale_down"))
+kable(summary_table,caption = "Table2 in latex: model summary")
 ```
 
 ```{r tables1 in table 2 word,include=T,echo=F,eval=!knitr::is_latex_output(),warning=FALSE}
