@@ -6,10 +6,9 @@ output:
   html_document: default
   word_document: default
   pdf_document: default
-
 ---
 
-You can inrest the text just like typing here
+You can insert the text just like typing here
 
 However, if you want to add the heading in the document we need to at with
 
@@ -21,7 +20,7 @@ You can do till header 6
 
 If you want to add the italics we need to words between (*word*) and for bold font we need (**word**).
 
-We can also use (*word*) for italics and (**word**) for bold.
+We can also use (_word_) for italics and (__word__) for bold.
 
 **NoTICE, FOR ADDING SPACE BETWEEN YOU LINE YOU NEED TO HIT ENTER KEY TWO TIME**
 
@@ -29,9 +28,9 @@ Now if you was to add subscript such as 3^rd^ Oct, 2023
 
 For Subscript we need (H~2~O) but for strikethrough we need two ~~Hello~~.
 
-For the equation if you write equation $x=mx+C$ and for equation in new line $$X^2 + Y^2 = r^2$$
+For the equation if you write equation $x=mx+C$ and for equation in new line $$X^2 + Y^2 = r^2$$ where $$r ~ \beta$$
 
-Now if you want to add link, download [R studio](www.rstudio.com)
+Now if you want to add link, download [R studio](www.google.com)
 
 of let add images ![Rstudio](./images.png){width=10%}
 
@@ -40,6 +39,7 @@ Now let we need to add the list of items.
 1.  List one
 
     -   Sublist (not order)
+        * thrid order
 
     a.  List with name
 
