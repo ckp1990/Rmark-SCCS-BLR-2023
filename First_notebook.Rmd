@@ -3,9 +3,10 @@ title: "First program"
 author: "Your name"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
-  word_document: default
   html_document: default
+  word_document: default
+  pdf_document: default
+
 ---
 
 You can inrest the text just like typing here
@@ -32,7 +33,7 @@ For the equation if you write equation $x=mx+C$ and for equation in new line $$X
 
 Now if you want to add link, download [R studio](www.rstudio.com)
 
-of let add images ![Rstudio](./images.png)
+of let add images ![Rstudio](./images.png){width=10%}
 
 Now let we need to add the list of items.
 

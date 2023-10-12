@@ -3,10 +3,10 @@ title: "My first notebook"
 author: "Chandan Kumar Pandey"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
-  word_document: default
   html_document:
     df_print: paged
+  pdf_document: default
+  word_document: default
 bibliography: ref.bib
 csl: museum-national-dhistoire-naturelle.csl  
 ---
@@ -31,14 +31,14 @@ We conducted a survey in schools of Bangalore North Taluk to understand the impa
 library(dplyr,warn.conflicts = F)
 ##loading the dataset into the R
 student_marks<-read.csv("./Data/Student_Marks.csv",header = T)
-#student_marks$Marks <- log(student_marks$Marks)
+student_marks$Marks <- log(student_marks$Marks)
 range_study <- range(student_marks$time_study)%>%round(2)
 range_marks <- range(student_marks$Marks)%>%round(2)
 ```
 
 A total of `r nrow(student_marks)` student records were collected, with the number of courses students were enrolled in ranging between `r min(student_marks$number_courses)` and `r max(student_marks$number_courses)`. Based on parents' interviews, on average, students studied for `r round(mean(student_marks$time_study),2)` hours per day (ranging from `r range_study[1]` to `r range_study[2]` per day). Further, the average mark scored was `r round(mean(student_marks$Marks),2)` in log scale, ranging from `r range_marks[1]` to `r range_marks[2]`..
 
-```{r linear model, include=T,echo=T,warning=F}
+```{r linear model, include=F,echo=T,warning=F}
 model <- lm(Marks~number_courses+time_study,data = student_marks)
 anova_table <- anova(model)%>%as.data.frame()%>%round(3)
 model_summary <- summary(model)
@@ -67,7 +67,7 @@ kable(anova_table,caption = "Table1: Annova output of the model")
 ## one can style this table using another package called flextable
 ```
 
-```{r addition table 2 latex,include=TRUE,echo=F,eval=knitr::is_latex_output(),warning=F}
+```{r addition table 2 latex,include=F,echo=F,eval=knitr::is_latex_output(),warning=F}
 library(knitr)
 #library(kableExtra)
 ## preparing the tables
@@ -83,7 +83,7 @@ kable(summary_table,caption = "Table2: model summary")
 ## one can style this table using another package called flextable
 ```
 
-```{r graphs, include=T,echo=F,warning=F,fig.cap="Student performace in relation to number of hours study and courses enrolled in",fig.height=4,fig.width=6}
+```{r graphs, include=F,echo=F,warning=F,fig.cap="Student performace in relation to number of hours study and courses enrolled in",fig.height=4,fig.width=6}
 library(ggplot2,warn.conflicts = F)
 predicted_value<-predict.lm(model,interval = "confidence")%>%as.data.frame()
 student_marks<-cbind(student_marks,predicted_value)
@@ -94,7 +94,7 @@ plot+geom_point()+
   theme_bw()+
   labs(
         x="Study hours per day",
-    y="Marks scored"
+    y="Marks scored (log)"
   )
 ```
 
